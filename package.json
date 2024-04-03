@@ -1,5 +1,5 @@
 {
-  "name": "@rbxts/topbarplus-types",
+  "name": "@rbxts/topbar-plus",
   "version": "1.0.0",
   "description": "",
   "main": "out/init.lua",
@@ -8,9 +8,14 @@
     "watch": "rbxtsc -w",
     "prepublishOnly": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g1mmethemoney/topbarplus-types"
+  },
+  "homepage": "https://1foreverhd.github.io/TopbarPlus/",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "g1mmethemoney / wAD",
+  "license": "MIT",
   "types": "out/index.d.ts",
   "files": [
     "out",
