@@ -48,13 +48,16 @@ interface WidgetInstances {
 }
 
 type WidgetInstanceNames = keyof WidgetInstances;
+type WidgetChildProperties<T extends WidgetInstanceNames> = keyof WidgetInstances[T];
 
 type ModificationArray<
-	InstanceName extends WidgetInstanceNames = WidgetInstanceNames,
-	Property extends keyof WidgetInstances[InstanceName] = keyof WidgetInstances[InstanceName],
+	InstanceName extends WidgetInstanceNames,
+	Property extends WidgetChildProperties<InstanceName>,
 > = [InstanceName, Property, WidgetInstances[InstanceName][Property], IconState?];
 
-type Modifications = ModificationArray | ModificationArray[];
+type Modifications<InstanceName extends WidgetInstanceNames, Property extends WidgetChildProperties<InstanceName>> =
+	| ModificationArray<InstanceName, Property>
+	| ModificationArray<InstanceName, Property>[];
 
 interface Icon extends IconEvents {
 	readonly name: string;
@@ -76,12 +79,16 @@ interface Icon extends IconEvents {
 	 * See [themes](https://1foreverhd.github.io/TopbarPlus/features/#modify-theme) for more details.
 	 * @chainable
 	 */
-	modifyTheme(modifications: Modifications): this;
+	modifyTheme<I extends WidgetInstanceNames, P extends WidgetChildProperties<I>>(
+		modifications: Modifications<I, P>,
+	): this;
 	/**
 	 * Updates the appearance of all icons that are parented to this icon (for example when a menu or dropdown).
 	 * See [themes](https://1foreverhd.github.io/TopbarPlus/features/#modify-theme) for more details.
 	 */
-	modifyChildTheme(modifications: Modifications): void;
+	modifyChildTheme<I extends WidgetInstanceNames, P extends WidgetChildProperties<I>>(
+		modifications: Modifications<I, P>,
+	): void;
 	/**
 	 * When set to false the icon will be disabled and hidden.
 	 * @chainable
@@ -295,7 +302,9 @@ interface IconConstructor {
 	getIcon(nameOrUID: string | IconUID): Icon | undefined;
 
 	/** Updates the appearance of all icons. See [themes](https://1foreverhd.github.io/TopbarPlus/features/#modify-theme) for more details. */
-	modifyBaseTheme(modifications: Modifications): void;
+	modifyBaseTheme<I extends WidgetInstanceNames, P extends WidgetChildProperties<I>>(
+		modifications: Modifications<I, P>,
+	): void;
 
 	new (): Icon;
 }
