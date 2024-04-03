@@ -1085,6 +1085,12 @@ function Icon:destroy()
 end
 Icon.Destroy = Icon.destroy
 
+return setmetatable({}, {
+	__index = function(self, index)
+		if index == "Icon" then
+			return Icon
+		end
 
-
-return { Icon = Icon }
+		return Icon[index]
+	end,
+})
