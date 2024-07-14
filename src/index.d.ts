@@ -305,14 +305,14 @@ interface IconConstructor {
 	/** Sets the base DisplayOrder of all TopbarPlus ScreenGuis. */
 	setDisplayOrder: (order: number) => void;
 	/** Returns a dictionary of icons where the key is the icon's UID and value the icon. */
-	getIcons(): Map<IconUID, Icon>;
+	getIcons: () => Map<IconUID, Icon>;
 	/** Returns an icon of the given name or UID. */
-	getIcon(nameOrUID: string | IconUID): Icon | undefined;
+	getIcon: (nameOrUID: string | IconUID) => Icon | undefined;
 
 	/** Updates the appearance of all icons. See [themes](https://1foreverhd.github.io/TopbarPlus/features/#modify-theme) for more details. */
-	modifyBaseTheme<I extends WidgetInstanceNames, P extends WidgetChildProperties<I>>(
+	modifyBaseTheme: <I extends WidgetInstanceNames, P extends WidgetChildProperties<I>>(
 		modifications: Modifications<I, P>,
-	): void;
+	) => void;
 
 	new (): Icon;
 }
