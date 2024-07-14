@@ -36,7 +36,11 @@ interface WidgetInstances {
 	ClickRegion: TextButton;
 	Menu: ScrollingFrame;
 	ContentsList: UIListLayout;
-	Dropdown: Frame;
+	Dropdown: Frame & { MaxIcons: number };
+	DropdownScroller: ScrollingFrame;
+	DropdownCorner: UICorner;
+	DropdownPadding: UIPadding;
+	DropdownList: UIListLayout;
 	Notice: Frame;
 	NoticeLabel: TextLabel;
 	PaddingLeft: Frame;
@@ -66,6 +70,9 @@ interface Icon extends IconEvents {
 	readonly totalNotices: number;
 	readonly locked: boolean;
 
+	highlightKey: Enum.KeyCode;
+	highlightIcon: boolean;
+
 	/**
 	 * Sets the name of the Widget instance.
 	 * This can be used in conjunction with Icon.getIcon(name).
@@ -85,10 +92,11 @@ interface Icon extends IconEvents {
 	/**
 	 * Updates the appearance of all icons that are parented to this icon (for example when a menu or dropdown).
 	 * See [themes](https://1foreverhd.github.io/TopbarPlus/features/#modify-theme) for more details.
+	 * @chainable
 	 */
 	modifyChildTheme<I extends WidgetInstanceNames, P extends WidgetChildProperties<I>>(
 		modifications: Modifications<I, P>,
-	): void;
+	): this;
 	/**
 	 * When set to false the icon will be disabled and hidden.
 	 * @chainable
