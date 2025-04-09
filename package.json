@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/topbar-plus",
-  "version": "3.0.2-ts.2",
+  "version": "3.0.2-ts.3",
   "description": "",
   "main": "out/init.lua",
   "scripts": {
