@@ -6,7 +6,7 @@ type AllFontNames = keyof Omit<typeof Enum.Font, "GetEnumItems">;
 type IconEventName = keyof IconEvents;
 
 type InferSignalCallback<T> = T extends RBXScriptSignal<infer A> ? A : never;
-type InferEventCallback<T extends IconEventName> = InferSignalCallback<IconEvents[T]>;
+type InferEventCallback<T extends IconEventName> = (...args: [self: Icon, ...rest: Parameters<InferSignalCallback<IconEvents[T]>>]) => void;
 
 export type IconUID = string;
 
