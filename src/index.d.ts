@@ -1,5 +1,6 @@
 export type IconState = "Deselected" | "Selected" | "Viewing";
 export type IconAlignment = "Left" | "Center" | "Right";
+export type FromSource = "User" | "OneClick" | "AutoDeselect" | "HideParentFeature" | "Overflow";
 
 type FontFamilyLink<T extends string> = `rbxasset://fonts/families/${T}.json`;
 type AllFontNames = keyof Omit<typeof Enum.Font, "GetEnumItems">;
@@ -11,12 +12,12 @@ type InferEventCallback<T extends IconEventName> = (
 	...rest: Parameters<InferSignalCallback<IconEvents[T]>>
 ) => void;
 
-export type IconUID = string;
+type IconUID = string;
 
 interface IconEvents {
-	selected: RBXScriptSignal<() => void>;
-	deselected: RBXScriptSignal<() => void>;
-	toggled: RBXScriptSignal<(isSelected: boolean) => void>;
+	selected: RBXScriptSignal<(fromSource?: FromSource, sourceIcon?: Icon) => void>;
+	deselected: RBXScriptSignal<(fromSource?: FromSource, sourceIcon?: Icon) => void>;
+	toggled: RBXScriptSignal<(isSelected: boolean, fromSource?: FromSource, sourceIcon?: Icon) => void>;
 	viewingStarted: RBXScriptSignal<() => void>;
 	viewingEnded: RBXScriptSignal<() => void>;
 	notified: RBXScriptSignal<() => void>;
@@ -109,12 +110,12 @@ interface Icon extends IconEvents {
 	 * Selects the icon (as if it were clicked once).
 	 * @chainable
 	 */
-	select(): this;
+	select(fromSource?: FromSource, sourceIcon?: Icon): this;
 	/**
 	 * Deselects the icon (as if it were clicked, then clicked again).
 	 * @chainable
 	 */
-	deselect(): this;
+	deselect(fromSource?: FromSource, sourceIcon?: Icon): this;
 	/**
 	 * Prompts a notice bubble which accumulates the further it is prompted.
 	 * If the icon belongs to a dropdown or menu, then the notice will appear on the parent icon when the parent icon is deselected.
